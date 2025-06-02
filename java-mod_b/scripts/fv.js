@@ -26,7 +26,7 @@ mc.system.runInterval(() => {
     if (player.getDynamicProperty("vision") === true) {
       if (player.getVelocity().x !== 0 || player.getVelocity().y !== 0 || player.getVelocity().z !== 0) {
         let playerLoc = player.getDynamicProperty("location");
-        playerLoc.y++;
+        //playerLoc.y++;
         playerLoc.x += 0.5;
         playerLoc.z += 0.5;
         player.teleport(playerLoc);
@@ -47,33 +47,13 @@ mc.system.runInterval(() => {
   }
 });
 
-/*mc.world.beforeEvents.worldInitialize.subscribe((event) => {
-  event.itemComponentRegistry.registerCustomComponent("cw:phone", {
-    onUse: (itemEvent) => {
-      phoneGUI().sendToPlayer(itemEvent.source);
-    }
-  });
-});*/
-
-/*function phoneGUI() {
-  let ui = new ScriptUI.ActionFormData();
-  ui.setTitle("功能");
-  ui.setInformation("");
-  ui.setButtonsArray([{
-    buttonDef: {
-      text: "自由视角"
-    },
-    event: (player) => {
-      player.setDynamicProperty("vision", player.getDynamicProperty("vision") === undefined ? true : player.getDynamicProperty("vision") === true ? false : true);
-      player.setDynamicProperty("cameraPosition", player.location);
-      player.setDynamicProperty("location", {
-        ...player.dimension.getBlock({
-          x: player.location.x,
-          y: player.location.y - 1,
-          z: player.location.z
-        })
-      });
-    }
-  }]);
-  return ui;
-}*/
+mc.world.beforeEvents.playerInteractWithBlock.subscribe((event)=>{
+  if(event.itemStack?.typeId == "minecraft:stick" && event.player.isSneaking){
+    event.cancel = true;
+    mc.system.run(()=>{
+      event.player.setDynamicProperty("vision", event.player.getDynamicProperty("vision") === undefined ? true : event.player.getDynamicProperty("vision") === true ? false : true);
+      event.player.setDynamicProperty("cameraPosition", event.player.location);
+      event.player.setDynamicProperty("location", event.player.dimension.getBlock(event.player.location));
+    });
+  }
+});
