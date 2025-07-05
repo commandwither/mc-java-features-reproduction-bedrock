@@ -1,7 +1,4 @@
 import * as mc from "@minecraft/server";
-import {
-  ScriptUI
-} from "./UIAPI.js";
 
 function vectorDistance(Vector1, Vector2) {
   let TheDistance = Math.sqrt(Math.pow((Vector1.x - Vector2.x), 2) + Math.pow((Vector1.y - Vector2.y), 2) + Math.pow((Vector1.z - Vector2.z), 2));
