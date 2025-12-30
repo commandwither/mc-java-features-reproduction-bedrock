@@ -50,14 +50,13 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe((events) => {
 			for(let times = 0; times < 10; times++){
 				let location = {
 					x: events.entity.location.x + Math.round(Math.random() * 17) - 8,
-					z: events.entity.location.z + Math.round(Math.random() * 17) - 8,
-					y: events.entity.location.y
+					z: events.entity.location.z + Math.round(Math.random() * 17) - 8
 				};
 				let testBlock = events.entity.dimension.getTopmostBlock(location);
 				//mc.world.sendMessage(testBlock.typeId);
 				if(testBlock && testBlock.typeId && !AvoidBlockType.includes(testBlock.typeId) && inside({x: events.entity.location.x + 8, y: events.entity.location.y + 6, z: events.entity.location.z + 8}, {x: events.entity.location.x - 8, y: events.entity.location.y - 6, z: events.entity.location.z - 8}, testBlock)){
 					location.y += 0.2;
-					events.entity.dimension.spawnEntity("minecraft:iron_golem", location, {spawnEvent: "minecraft:from_village"});
+					events.entity.dimension.spawnEntity("minecraft:iron_golem", testBlock, {spawnEvent: "minecraft:from_village"});
 					break;
 				}
 			}
