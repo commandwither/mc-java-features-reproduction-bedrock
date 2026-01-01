@@ -1,3 +1,4 @@
+"use strict"
 import * as mc from "@minecraft/server"
 import {
   Vector
@@ -49,7 +50,7 @@ mc.world.afterEvents.pistonActivate.subscribe((event) => {
     for (let blockPosition of blockList) {
       const block = pistonBlock.dimension.getBlock(Vector.add(blockPosition, blockOffset));
       if (BlockType.includes(block.typeId) && block.getRedstonePower()) {
-        const blockCopy = {...block, typeId: block.typeId};
+        const blockCopy = {x: block.x, y: block.y, z: block.z, typeId: block.typeId};
         if(block.dimension.getBlock(blockCopy).typeId !== "minecraft:air"){
           mc.system.runTimeout(()=>{pistonBlock.dimension.runCommand(`setblock ${blockCopy.x} ${blockCopy.y} ${blockCopy.z} ${blockCopy.typeId}`)}, 1);
         }

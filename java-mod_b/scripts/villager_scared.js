@@ -1,5 +1,6 @@
+"use strict"
 import * as mc from "@minecraft/server";
-
+import { tags } from "./api/tags.js";
 const AvoidBlockType = [
 	"minecraft:air",
 	"minecraft:ice",
@@ -7,6 +8,7 @@ const AvoidBlockType = [
 	"minecraft:bedrock",
 	"minecraft:frosted_ice"
 ];
+AvoidBlockType.concat(tags["lanterns"], tags["lightning_rods"], tags["candles"]);
 
 function inside(pos1, pos2, testLoc){
 	let max = {
@@ -55,8 +57,8 @@ mc.world.afterEvents.dataDrivenEntityTrigger.subscribe((events) => {
 				let testBlock = events.entity.dimension.getTopmostBlock(location);
 				//mc.world.sendMessage(testBlock.typeId);
 				if(testBlock && testBlock.typeId && !AvoidBlockType.includes(testBlock.typeId) && inside({x: events.entity.location.x + 8, y: events.entity.location.y + 6, z: events.entity.location.z + 8}, {x: events.entity.location.x - 8, y: events.entity.location.y - 6, z: events.entity.location.z - 8}, testBlock)){
-					location.y += 0.2;
-					events.entity.dimension.spawnEntity("minecraft:iron_golem", testBlock, {spawnEvent: "minecraft:from_village"});
+					location = {x: testBlock.x, y: testBlock.y + 1, z: testBlock.z}
+					events.entity.dimension.spawnEntity("minecraft:iron_golem", location, {spawnEvent: "minecraft:from_village"});
 					break;
 				}
 			}

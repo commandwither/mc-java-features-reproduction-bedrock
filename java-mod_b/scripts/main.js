@@ -1,5 +1,5 @@
-import "./fv.js"
+import "./commands.js"
 import "./tntCopy.js"
 import "./playerLoad.js"
 import "./villager_scared.js"
-//import "./getEntityInfo.js"
+//import "./test.js"
