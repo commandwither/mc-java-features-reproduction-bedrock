@@ -1,7 +1,7 @@
 {
   "format_version": 2,
   "header": {
-    "description": "1.21.100+",
+    "description": "1.21.120+",
     "name": "java特性还原",
     "uuid": "82c0cdc3-9538-41fe-aee6-c1f5e1ea9b62",
     "version": [
@@ -32,7 +32,7 @@
   "dependencies": [
     {
       "module_name": "@minecraft/server",
-      "version": "2.0.0"
+      "version": "2.5.0"
     }
   ],
   "metadata": {
